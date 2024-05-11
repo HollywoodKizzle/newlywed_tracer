@@ -18,7 +18,7 @@
   ],
   "content_scripts": [
     {
-      "matches": ["<all_urls>"],
+      "matches": ["https://www.social-searcher.com/facebook-search"],
       "js": ["/node_modules/typed.js/dist/typed.umd.js","content-script.js"]
     }
   ]

@@ -11,15 +11,13 @@
   "action": {
     "default_popup": "popup.html"
   },
-  
-  "options_page": "options.html",
   "host_permissions": [
     "<all_urls>"
   ],
   "content_scripts": [
     {
-      "matches": ["https://www.social-searcher.com/facebook-search"],
-      "js": ["/node_modules/typed.js/dist/typed.umd.js","content-script.js"]
+      "matches": ["https://www.social-searcher.com/*"],
+      "js": ["/node_modules/typed.js/dist/typed.umd.js","social-searcher.js"]
     }
   ]
   

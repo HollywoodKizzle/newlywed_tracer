@@ -53,10 +53,10 @@ chrome.runtime.onMessage.addListener(
   var spouseFullName = spouseFirstName + " " + spouseLastName;
   var postMaritalName = firstName + " " + spouseLastName;
 
-  var searchQuery = "'" + preMaritalName + "'";
-  searchQuery += " AND "; 
-  searchQuery += "'Engaged to";
-  searchQuery += " " + spouseFullName + "'";
+  var query = "'" + preMaritalName + "'";
+  query += " AND "; 
+  query += "'Engaged to";
+  query += " " + spouseFullName + "'";
   
   function clickSubmitButton() {
     var submitButton = document.querySelector('.facebook-page-form__btn');
@@ -68,7 +68,7 @@ chrome.runtime.onMessage.addListener(
 }
 
   
-/*  async function addThickGreenBorder() {
+/*  async function enterSearchQuery() {
     var element = document.getElementById("facebooksearchinput");
     //var element = document.querySelector('div');
     if (element) {
@@ -78,7 +78,7 @@ chrome.runtime.onMessage.addListener(
         //var typejsModule = await import(urlPath);
         const typed = new Typed('#facebooksearchinput', {
            // strings: ['<i>First</i> sentence.', '&amp; a second sentence.'],
-           strings: [searchQuery],
+           strings: [query],
             typeSpeed: 50,
           });
               } else {
@@ -87,18 +87,13 @@ chrome.runtime.onMessage.addListener(
 }*/
 
 
-function addThickGreenBorder() {
+function enterSearchQuery(query) {
     return new Promise((resolve, reject) => {
-        var element = document.getElementById("facebooksearchinput");
+        var searchBox = document.getElementById("facebooksearchinput");
         //var element = document.querySelector('div');
-        if (element) {
-            element.style.border = "3px solid green";
-            //var urlPath = await chrome.runtime.getURL("/node_modules/typed.js/dist/typed.umd.js");
-            //var urlPath = await chrome.runtime.getURL("/module.js");
-            //var typejsModule = await import(urlPath);
+        if (searchBox) {
             const typed = new Typed('#facebooksearchinput', {
-               // strings: ['<i>First</i> sentence.', '&amp; a second sentence.'],
-               strings: [searchQuery],
+               strings: [query],
                 typeSpeed: 50,
             });
             resolve("Thick green border added successfully.");
@@ -111,7 +106,7 @@ function addThickGreenBorder() {
 
 startButton.addEventListener("click", async function() {
     //debugger;
-  addThickGreenBorder().then((message)=>{ setTimeout(clickSubmitButton,5000);
+  enterSearchQuery(query).then((message)=>{ setTimeout(clickSubmitButton,5000);
 
   });
 

@@ -1,0 +1,36 @@
+# we begin by assuming the extesnion has access to some large data store that includes wedding registry data. More specifically, the first and last names of people due to get married, the scheduled wedding date and optionally the planned wedding location (city and state)
+
+The objective of the extension is to locate the facebook profile of at least one person in the couple. This is in turn is to be done by locating facebook profiles that bear the person's first and last name and features a "Married to" or "Engaged to" mention in their profile that references their future spouse. For example, if we have in our data store that Sally James and Richard Perkins are due to get married, and there exists a facebook account under the name "Richard Perkins", the profile contains the string "Engaged to Sally James", then the theory is that the person behind this profile is the same person listed in our data store.
+
+
+When the extension is invoked, it will do the following:
+
+
+open  new tab
+load the url "https://social-searcher.com/facebook-search" in the new tab 
+For each record "rec" in the data store
+   For each newlywed in rec 
+      let "firstName" and "lastName" be their first and last name respectively (e.g., firstName = "Sally", lastName = "Williams")
+      let  preMaritalName be the concatenation firstName + " " + lastName , (e.g., preMaritalName = "Sally Williams")
+      let spouseFirstName, spouseLastName ,spouseFullName be the spouse first, last, and full names(e.g., "Michael","Brooks",and "Michael Brooks")
+      let the postMaritalName be the concatenation firstName + " " + spouseLastName, (e.g., "Sally Brooks")
+      Enter the concatenation preMaritalName + "AND" + "Married to" into the search box (e.g., "'Sally Williams' AND 'Married to'"
+      Let results be the set of results returned by the search query
+      For each result in the set
+        if the result contains the value of preMaritalName and the concatenation "Married to" + spouseFullName as substrings
+           save the url of the result
+           edit the record to reflect that the couple has been discovered
+           move on to the next record
+        if the result contains the value of preMaritalName and the concatenation "Engaged to" + spouseFullName as substrings
+           save the url of the result
+           edit the record to reflect that the couple has been discovered
+           move on to the next record
+        if the result contains the value of preMaritalName and the concatenation "Engaged to" + spouseFullName as substrings
+           save the url of the result
+           edit the record to reflect that the couple has been discovered
+           move on to the next record
+     
+
+Explain the structure of a "record":
+ A record will be a object literal containing the following properties:
+   firstName1,lastName1,firstName2,lastName2,weddingCity,weddingState,weddingDate,recordId  

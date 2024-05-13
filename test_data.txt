@@ -1,0 +1,19 @@
+firstName1,lastName1,firstName2,lastName2,weddingCity,weddingState,weddingDate,recordId
+
+record1= {firstName1: "Sally",
+          lastName1: "Williams",
+          firstName2: "Michael",
+          lastName2: "Brooks",
+          weddingCity: "Gary",
+          weddingState: "Indiana",
+          weddingDate: "12/04/2025",
+          recordId: "er43seekdlkjb"}
+
+          record2= {firstName1: "Jessica",
+          lastName1: "Pope",
+          firstName2: "Corley",
+          lastName2: "Thaxton",
+          weddingCity: "Greenville",
+          weddingState: "MS",
+          weddingDate: "03/22/2025",
+          recordId: "0489f8e989"}

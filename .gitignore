@@ -1,7 +1,5 @@
 .vscode
 *code-workspace
-test_data.txt
-design.txt
 node_modules
 package.json
 package-lock.json

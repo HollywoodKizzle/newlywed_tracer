@@ -27,36 +27,50 @@ chrome.runtime.onMessage.addListener(
     }
   );
 
-/*var record= {firstName1: "Sally",
+/*var registryRecord= {firstName1: "Sally",
           lastName1: "Williams",
           firstName2: "Michael",
           lastName2: "Brooks",
           weddingCity: "Gary",
           weddingState: "Indiana",
           weddingDate: "12/04/2025",
-          recordId: "er43seekdlkjb"};*/
+          registryRecordId: "er43seekdlkjb"};*/
 
-       var   record= {firstName1: "Jessica",
+       var   registryRecord= {firstName1: "Jessica",
           lastName1: "Pope",
           firstName2: "Corley",
           lastName2: "Thaxton",
           weddingCity: "Greenville",
           weddingState: "MS",
           weddingDate: "03/22/2025",
-          recordId: "0489f8e989"}
+          registryRecordId: "0489f8e989"}
 
-  var firstName = record.firstName1;
-  var lastName = record.lastName1;
+  /*var firstName = registryRecord.firstName1;
+  var lastName = registryRecord.lastName1;
   var preMaritalName = firstName + " " + lastName;
-  var spouseFirstName = record.firstName2;        
-  var spouseLastName = record.lastName2;
+  var spouseFirstName = registryRecord.firstName2;        
+  var spouseLastName = registryRecord.lastName2;
   var spouseFullName = spouseFirstName + " " + spouseLastName;
   var postMaritalName = firstName + " " + spouseLastName;
 
   var query = "'" + preMaritalName + "'";
   query += " AND "; 
   query += "'Engaged to";
-  query += " " + spouseFullName + "'";
+  query += " " + spouseFullName + "'";*/
+
+  function createQuery(registryRecord){
+    var firstName = registryRecord.firstName1;
+    var lastName = registryRecord.lastName1;
+    var preMaritalName = firstName + " " + lastName;
+    var spouseFirstName = registryRecord.firstName2;        
+    var spouseLastName = registryRecord.lastName2;
+    var spouseFullName = spouseFirstName + " " + spouseLastName;
+    var postMaritalName = firstName + " " + spouseLastName;
+    var query = "'" + preMaritalName + "'";
+    query += " AND "; 
+    query += "'Engaged to";
+    query += " " + spouseFullName + "'";
+    return query;}
   
   function clickSubmitButton() {
     var submitButton = document.querySelector('.facebook-page-form__btn');
@@ -86,7 +100,7 @@ chrome.runtime.onMessage.addListener(
     }
 }*/
 
-
+var query = createQuery(registryRecord);
 function enterSearchQuery(query) {
     return new Promise((resolve, reject) => {
         var searchBox = document.getElementById("facebooksearchinput");
@@ -106,7 +120,8 @@ function enterSearchQuery(query) {
 
 startButton.addEventListener("click", async function() {
     //debugger;
-  enterSearchQuery(query).then((message)=>{ setTimeout(clickSubmitButton,5000);
+  enterSearchQuery(query).then((message)=>{ 
+    setTimeout(clickSubmitButton,5000);
 
   });
 

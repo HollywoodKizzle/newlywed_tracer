@@ -45,19 +45,6 @@ chrome.runtime.onMessage.addListener(
           weddingDate: "03/22/2025",
           registryRecordId: "0489f8e989"}
 
-  /*var firstName = registryRecord.firstName1;
-  var lastName = registryRecord.lastName1;
-  var preMaritalName = firstName + " " + lastName;
-  var spouseFirstName = registryRecord.firstName2;        
-  var spouseLastName = registryRecord.lastName2;
-  var spouseFullName = spouseFirstName + " " + spouseLastName;
-  var postMaritalName = firstName + " " + spouseLastName;
-
-  var query = "'" + preMaritalName + "'";
-  query += " AND "; 
-  query += "'Engaged to";
-  query += " " + spouseFullName + "'";*/
-
   function createQuery(registryRecord){
     var firstName = registryRecord.firstName1;
     var lastName = registryRecord.lastName1;
@@ -81,26 +68,21 @@ chrome.runtime.onMessage.addListener(
     }
 }
 
-  
-/*  async function enterSearchQuery() {
-    var element = document.getElementById("facebooksearchinput");
-    //var element = document.querySelector('div');
-    if (element) {
-        element.style.border = "3px solid green";
-        //var urlPath = await chrome.runtime.getURL("/node_modules/typed.js/dist/typed.umd.js");
-        //var urlPath = await chrome.runtime.getURL("/module.js");
-        //var typejsModule = await import(urlPath);
-        const typed = new Typed('#facebooksearchinput', {
-           // strings: ['<i>First</i> sentence.', '&amp; a second sentence.'],
-           strings: [query],
-            typeSpeed: 50,
-          });
-              } else {
-        console.error("Element with id 'facebooksearchinput' not found.");
-    }
-}*/
+function collectDivsByClass(className) {
+    let divs = document.querySelectorAll('div.' + className);
+    let divArray = Array.from(divs);
+    return divArray;
+}
 
+// Usage example:
+//let results = collectDivsByClass("gsc-webResult.gsc-result");
+//console.log(results);
+
+
+  
 var query = createQuery(registryRecord);
+
+
 function enterSearchQuery(query) {
     return new Promise((resolve, reject) => {
         var searchBox = document.getElementById("facebooksearchinput");

@@ -3,6 +3,41 @@
 import * as chromeModule from "/module.js";
 import * as ghostBrowserModule from "/module2.js";
 
+
+
+function collectDivsByClass(className) {
+  let divs = document.querySelectorAll('div.' + className);
+  let divArray = Array.from(divs);
+  return divArray;
+}
+
+
+function collectSearchResults(){
+return collectDivsByClass("gsc-webResult.gsc-result");
+
+}
+
+async function exportSearchResults(results){
+  return await chrome.runtime.sendMessage(message);}
+
+
+chrome.webNavigation.onCompleted.addListener((details) => {
+  //debugger;
+   console.log(details.timeStamp);
+   chromeModule.injectFunctionIntoTab(details.tabId, 
+    async ()=>{let results = collectSearchResults();
+         //console.log(results);
+         await exportSearchResults(results);});
+
+});
+
+
+
+
+
+
+
+
 const color = '#3aa757';
 
 chrome.runtime.onInstalled.addListener(async () => {

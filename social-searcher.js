@@ -27,23 +27,23 @@ chrome.runtime.onMessage.addListener(
     }
   );
 
-/*var registryRecord= {firstName1: "Sally",
+var registryRecord= {firstName1: "Sally",
           lastName1: "Williams",
           firstName2: "Michael",
           lastName2: "Brooks",
           weddingCity: "Gary",
           weddingState: "Indiana",
           weddingDate: "12/04/2025",
-          registryRecordId: "er43seekdlkjb"};*/
+          registryRecordId: "er43seekdlkjb"};
 
-       var   registryRecord= {firstName1: "Jessica",
+/*       var   registryRecord= {firstName1: "Jessica",
           lastName1: "Pope",
           firstName2: "Corley",
           lastName2: "Thaxton",
           weddingCity: "Greenville",
           weddingState: "MS",
           weddingDate: "03/22/2025",
-          registryRecordId: "0489f8e989"}
+          registryRecordId: "0489f8e989"}*/
 
   function createQuery(registryRecord){
     var firstName = registryRecord.firstName1;
@@ -112,7 +112,8 @@ startButton.addEventListener("click", async function() {
     //debugger;
   enterSearchQuery(query).then((message)=>{ 
     setTimeout(clickSubmitButton,5000);
-    setTimeout(()=>{console.log(collectSearchResults());},10000);
+    //inform ba
+    //setTimeout(()=>{console.log(collectSearchResults());},10000);
 
   });
 

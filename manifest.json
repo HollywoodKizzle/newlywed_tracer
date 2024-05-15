@@ -7,7 +7,8 @@
     "scripts": ["background.js"],
     "type": "module"
   },
-  "permissions": ["storage", "activeTab", "scripting", "tabs"],
+  "permissions": ["storage", "activeTab", "scripting", "tabs", "webNavigation"
+],
   "action": {
     "default_popup": "popup.html"
   },

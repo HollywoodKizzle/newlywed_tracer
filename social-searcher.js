@@ -74,6 +74,14 @@ function collectDivsByClass(className) {
     return divArray;
 }
 
+
+function collectSearchResults(){
+  return collectDivsByClass("gsc-webResult.gsc-result");
+
+}
+
+
+
 // Usage example:
 //let results = collectDivsByClass("gsc-webResult.gsc-result");
 //console.log(results);
@@ -104,6 +112,7 @@ startButton.addEventListener("click", async function() {
     //debugger;
   enterSearchQuery(query).then((message)=>{ 
     setTimeout(clickSubmitButton,5000);
+    setTimeout(()=>{console.log(collectSearchResults());},10000);
 
   });
 

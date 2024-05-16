@@ -39,18 +39,8 @@ function extractHostFromUrl(url) {
 
 
 
-chrome.webNavigation.onCompleted.addListener((details) => {
-  //debugger;
-   //console.log(details.url);
+/*chrome.webNavigation.onCompleted.addListener((details) => {
    let host = extractHostFromUrl(details.url);
-   //console.log(host);
-   //debugger;
-   /*chromeModule.injectFunctionIntoTab(details.tabId, 
-    async ()=>{let results = collectSearchResults();         
-         //await exportSearchResults(results);
-         await chrome.runtime.sendMessage(results);
-         //debugger;
-         console.log(results);});*/
   if (host == "www.social-searcher.com")
     {console.log("freemason");
   //debugger;
@@ -58,9 +48,36 @@ chrome.webNavigation.onCompleted.addListener((details) => {
       ["search-results.js"]);  
      }
     
+});*/
+
+function getAbsoluteUrlWithoutQueryParams(url) {
+  // Create an anchor element
+  var parser = document.createElement('a');
+  // Set the href attribute to the URL
+  parser.href = url;
+  // Construct the absolute URL without query parameters
+  var absoluteUrlWithoutParams = parser.origin + parser.pathname;
+  // Return the absolute URL without query parameters
+  return absoluteUrlWithoutParams;
+}
+
+
+
+
+chrome.webNavigation.onCommitted.addListener((details) => {
+  //debugger;
+  //let host = extractHostFromUrl(details.url);
+  let url = getAbsoluteUrlWithoutQueryParams(details.url);
+  let causeOfNavigation = details.transitionType;
+  //debugger;
+ if (url == "https://www.social-searcher.com/facebook-search/" && causeOfNavigation == 'form_submit')
+   {//console.log("freemason");
+ //debugger;
+    chromeModule.injectScriptIntoTab(details.tabId,
+     ["search-results.js"]);  
+    }
+  else {console.log('NO new script was injected');} 
 });
-
-
 
 
 

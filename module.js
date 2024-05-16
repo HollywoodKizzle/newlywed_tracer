@@ -9,7 +9,19 @@ export function injectFunctionIntoTab(tabIdentifier, injectedFunction) {
       func : injectedFunction,
     });
   }
+
   
+  export function injectScriptIntoTab(tabIdentifier, scriptName) {
+    // Execute the script in the specified tab
+    //chrome.tabs.executeScript(tabId, { code: injectedCode });
+    chrome.scripting.executeScript({
+      target : {tabId : tabIdentifier},
+      files : scriptName,
+    });
+  }
+
+
+
 export  async function collectAllTabObjects() {
     return new Promise((resolve, reject) => {
         chrome.tabs.query({}, function(tabs) {

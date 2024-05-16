@@ -21,14 +21,43 @@ async function exportSearchResults(results){
   return await chrome.runtime.sendMessage(message);}
 
 
+
+  function getOrigin() {
+    return window.location.protocol + '//' + window.location.hostname + (window.location.port ? ':' + window.location.port : '');
+}
+
+
+
+function extractHostFromUrl(url) {
+    // Create a URL object with the given URL
+    var urlObject = new URL(url);
+    // Return the hostname of the URL object
+    return urlObject.hostname;
+}
+
+
+
+
+
 chrome.webNavigation.onCompleted.addListener((details) => {
   //debugger;
-   console.log(details.timeStamp);
-   chromeModule.injectFunctionIntoTab(details.tabId, 
-    async ()=>{let results = collectSearchResults();
-         //console.log(results);
-         await exportSearchResults(results);});
-
+   //console.log(details.url);
+   let host = extractHostFromUrl(details.url);
+   //console.log(host);
+   //debugger;
+   /*chromeModule.injectFunctionIntoTab(details.tabId, 
+    async ()=>{let results = collectSearchResults();         
+         //await exportSearchResults(results);
+         await chrome.runtime.sendMessage(results);
+         //debugger;
+         console.log(results);});*/
+  if (host == "www.social-searcher.com")
+    {console.log("freemason");
+  //debugger;
+     chromeModule.injectScriptIntoTab(details.tabId,
+      ["search-results.js"]);  
+     }
+    
 });
 
 
@@ -63,11 +92,11 @@ identity: "97e4fc196dab4679808cfa9753a9860f"};
 
 chrome.runtime.onMessage.addListener(
   async function(request,sender,sendresponse){
-  console.log(request);  
-  let collectedTabs = await chromeModule.collectAllTabIDs();
+  //console.log(request);  
+  //let collectedTabs = await chromeModule.collectAllTabIDs();
   //let tabId = collectedTabs[2];
-  let tabId = sender.tab.id;
-  chromeModule.injectFunctionIntoTab(tabId, ()=>{console.log('this tab has been injected with code!!!');});
+  //let tabId = sender.tab.id;
+  //chromeModule.injectFunctionIntoTab(tabId, ()=>{console.log('this tab has been injected with code!!!');});
   //let identities = await ghostBrowserModule.collectGhostBrowserIdentities();
   //console.log(identities);
   //ghostBrowserModule.openNewTab(tabDetails,(newTabId)=>{console.log(newTabId)});

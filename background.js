@@ -50,7 +50,7 @@ function extractHostFromUrl(url) {
     
 });*/
 
-function getAbsoluteUrlWithoutQueryParams(url) {
+/*function getAbsoluteUrlWithoutQueryParams(url) {
   // Create an anchor element
   var parser = document.createElement('a');
   // Set the href attribute to the URL
@@ -59,8 +59,17 @@ function getAbsoluteUrlWithoutQueryParams(url) {
   var absoluteUrlWithoutParams = parser.origin + parser.pathname;
   // Return the absolute URL without query parameters
   return absoluteUrlWithoutParams;
-}
+}*/
 
+
+function getAbsoluteUrlWithoutQueryParams(url) {
+  // Create a URL object
+  var urlObj = new URL(url);
+  // Construct the absolute URL without query parameters
+  var absoluteUrlWithoutParams = urlObj.origin + urlObj.pathname;
+  // Return the absolute URL without query parameters
+  return absoluteUrlWithoutParams;
+}
 
 
 
@@ -73,9 +82,10 @@ chrome.webNavigation.onCommitted.addListener((details) => {
  if (url == "https://www.social-searcher.com/facebook-search/" && causeOfNavigation == 'form_submit')
    {//console.log("freemason");
  //debugger;
+ 
     chromeModule.injectScriptIntoTab(details.tabId,
      ["search-results.js"]);  
-    }
+    } 
   else {console.log('NO new script was injected');} 
 });
 

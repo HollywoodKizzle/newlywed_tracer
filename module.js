@@ -50,3 +50,15 @@ export  async function collectAllTabIDs() {
 
   }
   
+  export function injectDeferredScript(tabId, scriptUrl) {
+    chrome.scripting.executeScript({
+      target: { tabId: tabId },
+      func: (url) => {
+        const script = document.createElement('script');
+        script.src = url;
+        script.defer = true;
+        document.head.appendChild(script);
+      },
+      args: [scriptUrl]
+    });
+  }

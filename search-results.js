@@ -13,6 +13,7 @@ function collectDivsByClass(className) {
   function collectSearchResultsInnerText() {
     // Call the collectSearchResults function to get the array of HTML elements
     var elements = collectSearchResults();
+    //debugger;
   
     // Map over the array to get the innerText property of each element
     var innerTextArray = elements.map(function(element) {
@@ -30,9 +31,12 @@ async function exportSearchResults(results){
 
          
   console.log("new script has been injected");
-  setTimeout(()=>{console.log(collectSearchResultsInnerText());},10000);
-  //console.log(x);
-  //console.log(collectSearchResults());
-  /*document.addEventListener('DOMContentLoaded',(event)=>{let x = collectSearchResults(); 
-    debugger;
-    console.log(x);});*/
+  setTimeout(async ()=>{
+    let results = collectSearchResultsInnerText();
+    await exportSearchResults(results);
+    console.log(collectSearchResultsInnerText());
+  
+  
+  },10000);
+  
+

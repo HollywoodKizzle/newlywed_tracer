@@ -119,14 +119,7 @@ identity: "97e4fc196dab4679808cfa9753a9860f"};
 
 chrome.runtime.onMessage.addListener(
   async function(request,sender,sendresponse){
-  //console.log(request);  
-  //let collectedTabs = await chromeModule.collectAllTabIDs();
-  //let tabId = collectedTabs[2];
-  //let tabId = sender.tab.id;
-  //chromeModule.injectFunctionIntoTab(tabId, ()=>{console.log('this tab has been injected with code!!!');});
-  //let identities = await ghostBrowserModule.collectGhostBrowserIdentities();
-  //console.log(identities);
-  //ghostBrowserModule.openNewTab(tabDetails,(newTabId)=>{console.log(newTabId)});
+  console.log(request);  
   
     }
 );

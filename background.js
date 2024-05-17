@@ -84,7 +84,7 @@ chrome.webNavigation.onCommitted.addListener((details) => {
  //debugger;
  
     chromeModule.injectScriptIntoTab(details.tabId,
-     ["search-results.js"]);  
+     ["dom_script.js","search-results.js"]);  
     } 
   else {console.log('NO new script was injected');} 
 });

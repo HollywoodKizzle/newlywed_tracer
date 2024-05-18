@@ -92,8 +92,6 @@ chrome.webNavigation.onCommitted.addListener((details) => {
 
 
 
-
-
 const color = '#3aa757';
 
 chrome.runtime.onInstalled.addListener(async () => {

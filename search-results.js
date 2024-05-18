@@ -8,7 +8,7 @@
        await chrome.runtime.sendMessage(searchResults);
        console.log(searchResults);
   
-  },10000);
+  },4000);
   
 
 

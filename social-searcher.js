@@ -42,14 +42,14 @@ chrome.runtime.onMessage.addListener(
     }
   );
 
-/*var registryRecord= {firstName1: "Sally",
+var registryRecord= {firstName1: "Sally",
           lastName1: "Williams",
           firstName2: "Michael",
           lastName2: "Brooks",
           weddingCity: "Gary",
           weddingState: "Indiana",
           weddingDate: "12/04/2025",
-          registryRecordId: "er43seekdlkjb"};*/
+          registryRecordId: "er43seekdlkjb"};
 
        /*var   registryRecord= {firstName1: "Jessica",
           lastName1: "Pope",
@@ -61,7 +61,7 @@ chrome.runtime.onMessage.addListener(
           registryRecordId: "0489f8e989"};*/
 
 
-          var   registryRecord= {firstName1: "Sarah",
+/*          var   registryRecord= {firstName1: "Sarah",
           lastName1: "Eschmann",
           firstName2: "Jared",
           lastName2: "Sossner",
@@ -70,7 +70,7 @@ chrome.runtime.onMessage.addListener(
           weddingDate: "03/22/2025",
           registryRecordId: "0489f8e989"};
        
-
+*/
   function createQuery(registryRecord){
     var firstName = registryRecord.firstName1;
     var lastName = registryRecord.lastName1;

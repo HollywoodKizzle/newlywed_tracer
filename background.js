@@ -12,27 +12,28 @@ function collectDivsByClass(className) {
 }
 
 
-function collectSearchResults(){
-return collectDivsByClass("gsc-webResult.gsc-result");
+function collectSearchResults() {
+  return collectDivsByClass("gsc-webResult.gsc-result");
 
 }
 
-async function exportSearchResults(results){
-  return await chrome.runtime.sendMessage(message);}
+async function exportSearchResults(results) {
+  return await chrome.runtime.sendMessage(message);
+}
 
 
 
-  function getOrigin() {
-    return window.location.protocol + '//' + window.location.hostname + (window.location.port ? ':' + window.location.port : '');
+function getOrigin() {
+  return window.location.protocol + '//' + window.location.hostname + (window.location.port ? ':' + window.location.port : '');
 }
 
 
 
 function extractHostFromUrl(url) {
-    // Create a URL object with the given URL
-    var urlObject = new URL(url);
-    // Return the hostname of the URL object
-    return urlObject.hostname;
+  // Create a URL object with the given URL
+  var urlObject = new URL(url);
+  // Return the hostname of the URL object
+  return urlObject.hostname;
 }
 
 
@@ -79,14 +80,13 @@ chrome.webNavigation.onCommitted.addListener((details) => {
   let url = getAbsoluteUrlWithoutQueryParams(details.url);
   let causeOfNavigation = details.transitionType;
   //debugger;
- if (url == "https://www.social-searcher.com/facebook-search/" && causeOfNavigation == 'form_submit')
-   {//console.log("freemason");
- //debugger;
- 
+  if (url == "https://www.social-searcher.com/facebook-search/" && causeOfNavigation == 'form_submit') {//console.log("freemason");
+    //debugger;
+
     chromeModule.injectScriptIntoTab(details.tabId,
-     ["jquery-3.7.1.min.js","dom_script.js","search-results.js"]);  
-    } 
-  else {console.log('NO new script was injected');} 
+      ["jquery-3.7.1.min.js", "dom_script.js", "search-results.js"]);
+  }
+  else { console.log('NO new script was injected'); }
 });
 
 
@@ -99,14 +99,16 @@ chrome.runtime.onInstalled.addListener(async () => {
   console.log('Default background color set to %cgreen', `color: ${color}`);
 });
 
-chrome.tabs.onCreated.addListener(function(tab) {
+chrome.tabs.onCreated.addListener(function (tab) {
   console.log("New tab created with URL: " + tab.url);
 });
 
+function sendResponse (){ let x = "data loaded"; return x;}
 
 chrome.runtime.onMessage.addListener(
-  async function(message,sender,sendresponse){
-  console.log(message);  
-  
-    }
+  async function (message, sender,sendResponse){
+  if (message == "loadRegistryData") { }
+  sendResponse("data loaded");
+
+}
 );

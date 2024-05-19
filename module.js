@@ -50,15 +50,11 @@ export  async function collectAllTabIDs() {
 
   }
   
-  export function injectDeferredScript(tabId, scriptUrl) {
-    chrome.scripting.executeScript({
-      target: { tabId: tabId },
-      func: (url) => {
-        const script = document.createElement('script');
-        script.src = url;
-        script.defer = true;
-        document.head.appendChild(script);
-      },
-      args: [scriptUrl]
-    });
+
+export  async function getCurrentTab() {
+    let queryOptions = { active: true}; 
+    // `tab` will either be a `tabs.Tab` instance or `undefined`.
+    let [tab] = await chrome.tabs.query(queryOptions);
+    debugger;
+    return tab;
   }

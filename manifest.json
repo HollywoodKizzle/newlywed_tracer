@@ -10,7 +10,7 @@
   "permissions": ["storage", "activeTab", "scripting", "tabs", "webNavigation"
 ],
   "action": {
-    "default_popup": "popup.html"
+    "default_popup": "ui.html"
   },
   "host_permissions": [
     "<all_urls>"

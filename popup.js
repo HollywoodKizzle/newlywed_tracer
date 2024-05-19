@@ -1,4 +1,4 @@
-import { messageBackgroundScript } from "/module.js";
+//import { messageBackgroundScript } from "/module.js";
 // Initialize button with users' preferred color
 const changeColor = document.getElementById('changeColor');
 const storageButton = document.getElementById('getStorage');

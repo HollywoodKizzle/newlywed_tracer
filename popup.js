@@ -34,7 +34,7 @@ async function setPageBackgroundColor(message) {
   chrome.storage.sync.get('color', ({ color }) => {
     document.body.style.backgroundColor = color;
   });
-  //var message = "hello";
+  
   //var response = await chrome.runtime.sendMessage(message);
   //var response = await chrome.runtime.sendMessage("hello");
   //var chromeModule = await import("/module.js");

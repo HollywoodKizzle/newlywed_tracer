@@ -5,23 +5,114 @@ import * as ghostBrowserModule from "/module2.js";
 
 
 
-function collectDivsByClass(className) {
-  let divs = document.querySelectorAll('div.' + className);
-  let divArray = Array.from(divs);
-  return divArray;
-}
 
+let records = [
+    {
+        firstName1: "Sarah",
+        lastName1: "Eschmann",
+        firstName2: "Jared",
+        lastName2: "Sossner",
+        weddingCity: "Peuria",
+        weddingState: "il",
+        weddingDate: "03/22/2025",
+        registryRecordId: "0489f8e989"
+    },
+    {
+        firstName1: "Emma",
+        lastName1: "Thompson",
+        firstName2: "Michael",
+        lastName2: "Johnson",
+        weddingCity: "Denver",
+        weddingState: "CO",
+        weddingDate: "06/15/2024",
+        registryRecordId: "a1b2c3d4e5"
+    },
+    {
+        firstName1: "Olivia",
+        lastName1: "Brown",
+        firstName2: "Ethan",
+        lastName2: "Davis",
+        weddingCity: "Austin",
+        weddingState: "TX",
+        weddingDate: "09/12/2025",
+        registryRecordId: "f6g7h8i9j0"
+    },
+    {
+        firstName1: "Sophia",
+        lastName1: "Wilson",
+        firstName2: "James",
+        lastName2: "Martinez",
+        weddingCity: "Miami",
+        weddingState: "FL",
+        weddingDate: "12/01/2024",
+        registryRecordId: "k1l2m3n4o5"
+    },
+    {
+        firstName1: "Isabella",
+        lastName1: "Garcia",
+        firstName2: "Alexander",
+        lastName2: "Anderson",
+        weddingCity: "San Diego",
+        weddingState: "CA",
+        weddingDate: "05/30/2025",
+        registryRecordId: "p6q7r8s9t0"
+    },
+    {
+        firstName1: "Mia",
+        lastName1: "Rodriguez",
+        firstName2: "Benjamin",
+        lastName2: "Thomas",
+        weddingCity: "Seattle",
+        weddingState: "WA",
+        weddingDate: "08/22/2024",
+        registryRecordId: "u1v2w3x4y5"
+    },
+    {
+        firstName1: "Amelia",
+        lastName1: "Lee",
+        firstName2: "William",
+        lastName2: "Hernandez",
+        weddingCity: "Phoenix",
+        weddingState: "AZ",
+        weddingDate: "11/05/2025",
+        registryRecordId: "z6a7b8c9d0"
+    },
+    {
+        firstName1: "Evelyn",
+        lastName1: "Walker",
+        firstName2: "Henry",
+        lastName2: "Lopez",
+        weddingCity: "Portland",
+        weddingState: "OR",
+        weddingDate: "07/19/2024",
+        registryRecordId: "e1f2g3h4i5"
+    },
+    {
+        firstName1: "Abigail",
+        lastName1: "Harris",
+        firstName2: "Jackson",
+        lastName2: "King",
+        weddingCity: "Chicago",
+        weddingState: "IL",
+        weddingDate: "10/14/2025",
+        registryRecordId: "j6k7l8m9n0"
+    },
+    {
+        firstName1: "Harper",
+        lastName1: "Clark",
+        firstName2: "Lucas",
+        lastName2: "Perez",
+        weddingCity: "Boston",
+        weddingState: "MA",
+        weddingDate: "04/28/2025",
+        registryRecordId: "o1p2q3r4s5"
+    }
+];
 
-function collectSearchResults() {
-  return collectDivsByClass("gsc-webResult.gsc-result");
+//let registryData = { records: registryRecords };
+//let registryData = { records: registryRecords };
 
-}
-
-async function exportSearchResults(results) {
-  return await chrome.runtime.sendMessage(message);
-}
-
-
+//This array literal contains ten wedding records, each with the same properties but with different made-up values.
 
 function getOrigin() {
   return window.location.protocol + '//' + window.location.hostname + (window.location.port ? ':' + window.location.port : '');
@@ -107,8 +198,13 @@ function sendResponse (){ let x = "data loaded"; return x;}
 
 chrome.runtime.onMessage.addListener(
   async function (message, sender,sendResponse){
-  if (message == "loadRegistryData") { }
-  sendResponse("data loaded");
+  if (message == "loadRegistryData") { 
+    //debugger;
+    sendResponse("data loaded");
+    await chrome.storage.sync.set({ registryRecords: records});
+    
+  }
+  
 
 }
 );

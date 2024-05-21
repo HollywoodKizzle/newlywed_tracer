@@ -3,7 +3,14 @@ import * as chromeModule from "/module.js";
 document.getElementById('startButton').addEventListener('click', async function() {
     //open new tab and get its id
     //send the id as a accompanying instruction to the service worker
-    await chrome.runtime.sendMessage("loadRegistryData");
+    await chrome.storage.session.clear();
+    //let tab = await chrome.tabs.create({active: true, url: "https://www.social-searcher.com/facebook-search/"});
+    //let tabIdenitifier = tab.id;
+    let tabIdenitifier = 3;
+    //let instruction = { message: "loadRegistryData", tabId: tabIdenitifier};
+    let instruction = "loadRegistryData";
+    //debugger;
+    await chrome.runtime.sendMessage(instruction);
     //let storageData = await chrome.storage.session.get("registryRecords");
     //debugger;
     /*if (responseFromBackgroundScript == "data loaded") {  
@@ -21,7 +28,8 @@ document.getElementById('startButton').addEventListener('click', async function(
 
 });
 chrome.storage.session.onChanged.addListener((storageData)=>{
-    debugger;
+    //console.log("hello");
+    //debugger;
 }
 );
 

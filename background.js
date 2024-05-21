@@ -158,10 +158,16 @@ chrome.runtime.onInstalled.addListener(async () => {
 });
 
 chrome.runtime.onMessage.addListener(
-  async function (message, sender,sendResponse){
-  if (message == "loadRegistryData") { 
-    debugger;
-     await chrome.storage.session.set({ registryRecords: records}); }
+  async function (instruction, sender,sendResponse){
+   //debugger; 
+   //let message, tabId; 
+   //({ message, tabId} = instruction);
+  if (instruction == "loadRegistryData") { 
+    //debugger;
+    let tab = await chrome.tabs.create({active: true, url: "https://www.social-searcher.com/facebook-search/"});
+     await chrome.storage.session.set({ registryRecords: records, tabIdentifier: tab.id }); 
+     await chrome.tabs.sendMessage(tab.id, message);
+    }
 
 }
 );

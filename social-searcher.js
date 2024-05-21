@@ -144,3 +144,5 @@ startButton.addEventListener("click", async function() {
   });
 
 });
+
+chrome.storage.session.get(["registryRecords","tabIdentifier"]).then((items)=>{console.log(items);});

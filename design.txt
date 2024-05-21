@@ -34,3 +34,16 @@ For each record "rec" in the data store
 Explain the structure of a "record":
  A record will be a object literal containing the following properties:
    firstName1,lastName1,firstName2,lastName2,weddingCity,weddingState,weddingDate,recordId  
+
+Explain how records will be stored, retrieved, and updated in the browser's storage by the different components of the extension:
+Each tab controlled by the extension will be allocated its own set of records. Care should be taken to ensure that their
+is no overlap between the allocated records of different tabs
+
+When the start button is clicked:
+ The service worker will retrieve a predefined number of  records 
+ It will create a new tab, and save the tab identifier
+ It will add a new item in the chrome.storage.session area with key being the new tab's idenitifer, and its values being the records
+ it will then send the aforementioned tab identifier to the content script of the very tab it identifies
+ once the content script recieves this identifier, it will use it to look the records assigned to it 
+ The service worker will carry out these steps for each tab it creates
+ content scripts will henceforth  interact with their assigned records using their assigned tab identifers

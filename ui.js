@@ -1,13 +1,16 @@
 import * as chromeModule from "/module.js";
 
 document.getElementById('startButton').addEventListener('click', async function() {
-    //instruct the service worker to load the registry data in storage
-    let responseFromBackgroundScript = await chrome.runtime.sendMessage("loadRegistryData"); 
-    if (responseFromBackgroundScript == "data loaded") {  
-        debugger;
+    //open new tab and get its id
+    //send the id as a accompanying instruction to the service worker
+    await chrome.runtime.sendMessage("loadRegistryData");
+    //let storageData = await chrome.storage.session.get("registryRecords");
+    //debugger;
+    /*if (responseFromBackgroundScript == "data loaded") {  
+        //debugger;
         let storageData = await chrome.storage.session.get("registryRecords");
         console.log(storageData);
-}
+}*/
 
 
     /*let currentTab = await chromeModule.getCurrentTab();
@@ -17,6 +20,11 @@ document.getElementById('startButton').addEventListener('click', async function(
         
 
 });
+chrome.storage.session.onChanged.addListener((storageData)=>{
+    debugger;
+}
+);
+
 
 document.getElementById('stopButton').addEventListener('click', function() {
     console.log('Stop button clicked');

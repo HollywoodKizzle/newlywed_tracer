@@ -160,12 +160,8 @@ chrome.runtime.onInstalled.addListener(async () => {
 chrome.runtime.onMessage.addListener(
   async function (message, sender,sendResponse){
   if (message == "loadRegistryData") { 
-    //debugger;
-    sendResponse("data loaded");
-    await chrome.storage.session.set({ registryRecords: records});
-    
-  }
-  
+    debugger;
+     await chrome.storage.session.set({ registryRecords: records}); }
 
 }
 );

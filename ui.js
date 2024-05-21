@@ -4,7 +4,8 @@ document.getElementById('startButton').addEventListener('click', async function(
     //instruct the service worker to load the registry data in storage
     let responseFromBackgroundScript = await chrome.runtime.sendMessage("loadRegistryData"); 
     if (responseFromBackgroundScript == "data loaded") {  
-        let storageData = await chrome.storage.sync.get("registryRecords");
+        debugger;
+        let storageData = await chrome.storage.session.get("registryRecords");
         console.log(storageData);
 }
 

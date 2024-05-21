@@ -1,7 +1,5 @@
 
-//import { injectFunctionIntoTab } from "/module.js";
 import * as chromeModule from "/module.js";
-import * as ghostBrowserModule from "/module2.js";
 
 
 
@@ -109,11 +107,6 @@ let records = [
     }
 ];
 
-//let registryData = { records: registryRecords };
-//let registryData = { records: registryRecords };
-
-//This array literal contains ten wedding records, each with the same properties but with different made-up values.
-
 function getOrigin() {
   return window.location.protocol + '//' + window.location.hostname + (window.location.port ? ':' + window.location.port : '');
 }
@@ -131,27 +124,6 @@ function extractHostFromUrl(url) {
 
 
 
-/*chrome.webNavigation.onCompleted.addListener((details) => {
-   let host = extractHostFromUrl(details.url);
-  if (host == "www.social-searcher.com")
-    {console.log("freemason");
-  //debugger;
-     chromeModule.injectScriptIntoTab(details.tabId,
-      ["search-results.js"]);  
-     }
-    
-});*/
-
-/*function getAbsoluteUrlWithoutQueryParams(url) {
-  // Create an anchor element
-  var parser = document.createElement('a');
-  // Set the href attribute to the URL
-  parser.href = url;
-  // Construct the absolute URL without query parameters
-  var absoluteUrlWithoutParams = parser.origin + parser.pathname;
-  // Return the absolute URL without query parameters
-  return absoluteUrlWithoutParams;
-}*/
 
 
 function getAbsoluteUrlWithoutQueryParams(url) {
@@ -166,8 +138,7 @@ function getAbsoluteUrlWithoutQueryParams(url) {
 
 
 chrome.webNavigation.onCommitted.addListener((details) => {
-  //debugger;
-  //let host = extractHostFromUrl(details.url);
+  
   let url = getAbsoluteUrlWithoutQueryParams(details.url);
   let causeOfNavigation = details.transitionType;
   //debugger;
@@ -182,26 +153,16 @@ chrome.webNavigation.onCommitted.addListener((details) => {
 
 
 
-
-const color = '#3aa757';
-
 chrome.runtime.onInstalled.addListener(async () => {
-  chrome.storage.sync.set({ color });
-  console.log('Default background color set to %cgreen', `color: ${color}`);
+  chrome.storage.session.setAccessLevel({accessLevel: "TRUSTED_AND_UNTRUSTED_CONTEXTS"});
 });
-
-chrome.tabs.onCreated.addListener(function (tab) {
-  console.log("New tab created with URL: " + tab.url);
-});
-
-function sendResponse (){ let x = "data loaded"; return x;}
 
 chrome.runtime.onMessage.addListener(
   async function (message, sender,sendResponse){
   if (message == "loadRegistryData") { 
     //debugger;
     sendResponse("data loaded");
-    await chrome.storage.sync.set({ registryRecords: records});
+    await chrome.storage.session.set({ registryRecords: records});
     
   }
   

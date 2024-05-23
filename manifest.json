@@ -18,7 +18,7 @@
   "content_scripts": [
     {
       "matches": ["https://www.social-searcher.com/*"],
-      "js": ["jquery-3.7.1.min.js","/node_modules/typed.js/dist/typed.umd.js","social-searcher.js"]
+      "js": ["jquery-3.7.1.min.js","/node_modules/typed.js/dist/typed.umd.js","social-searcher.js","content_script.js"]
     }
   ]
   

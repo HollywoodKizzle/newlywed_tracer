@@ -15,6 +15,14 @@ let records = [
         weddingDate: "03/22/2025",
         registryRecordId: "0489f8e989"
     },
+    {firstName1: "Jessica",
+          lastName1: "Pope",
+          firstName2: "Corley",
+          lastName2: "Thaxton",
+          weddingCity: "Greenville",
+          weddingState: "MS",
+          weddingDate: "03/22/2025",
+          registryRecordId: "0489f8e94kp"},
     {
         firstName1: "Emma",
         lastName1: "Thompson",

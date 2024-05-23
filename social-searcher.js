@@ -16,6 +16,18 @@ href="https://www.google.com/url?client=internal-element-cse&amp;cx=42b4f126acb5
 
 //https://www.facebook.com/Shnala
 
+var recordsKey;
+var records;
+
+//chrome.runtime.onMessage.addListener(async (message,sender,sendResponse)=>{
+  //console.log("the tab id is: " + message)
+  //recordKey = message;});
+
+
+  chrome.runtime.sendMessage("provide record key").then(async (key)=>{
+    recordsKey = key; 
+    records = await chrome.storage.session.get(recordsKey);});
+
 // Create a button element
 var startButton = document.createElement("button");
 startButton.textContent = "Click me";
@@ -136,6 +148,8 @@ function enterSearchQuery(query) {
 
 startButton.addEventListener("click", async function() {
     //debugger;
+   console.log(records);
+   console.log(recordsKey); 
   enterSearchQuery(query).then((message)=>{ 
     setTimeout(clickSubmitButton,5000);
     //inform ba
@@ -146,3 +160,4 @@ startButton.addEventListener("click", async function() {
 });
 
 chrome.storage.session.get(["registryRecords","tabIdentifier"]).then((items)=>{console.log(items);});
+

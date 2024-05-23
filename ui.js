@@ -8,7 +8,7 @@ document.getElementById('startButton').addEventListener('click', async function(
     //let tabIdenitifier = tab.id;
     let tabIdenitifier = 3;
     //let instruction = { message: "loadRegistryData", tabId: tabIdenitifier};
-    let instruction = "loadRegistryData";
+    let instruction = "start";
     //debugger;
     await chrome.runtime.sendMessage(instruction);
     //let storageData = await chrome.storage.session.get("registryRecords");

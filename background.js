@@ -162,12 +162,16 @@ chrome.runtime.onMessage.addListener(
    //debugger; 
    //let message, tabId; 
    //({ message, tabId} = instruction);
-  if (instruction == "loadRegistryData") { 
+  if (instruction == "start") { 
     //debugger;
     let tab = await chrome.tabs.create({active: true, url: "https://www.social-searcher.com/facebook-search/"});
-     await chrome.storage.session.set({ registryRecords: records, tabIdentifier: tab.id }); 
-     await chrome.tabs.sendMessage(tab.id, message);
+     await chrome.storage.session.set({ [tab.id]: records  }); 
+     
     }
+  if (instruction == "provide record key"){ 
+     await chrome.tabs.sendMessage(sender.tab.id,sender.tab.id);
+
+  }
 
 }
 );

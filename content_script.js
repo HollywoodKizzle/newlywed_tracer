@@ -27,11 +27,12 @@ async function main(){
      console.log(x);
      let storageData = await chrome.storage.session.get(x);
      records = storageData[recordsKey];//
-     registryRecord = records[9];
+     registryRecord = records[0];
      sessionData.query = createQuery(registryRecord);} 
 
   if (message.description == "collect search results"){
     setTimeout( async ()=>{ let results = extractSearchResults();
+                            //debugger;
                             let message = {description: "search results", searchResults: results};
                             await chrome.runtime.sendMessage(message); }
                             ,4000);
@@ -54,7 +55,7 @@ await chrome.runtime.sendMessage({description:"provide records key"});
   setTimeout(clickSubmitButton,5000);}*/
 
 startButton.addEventListener("click", async function(){
-  debugger;
+  //debugger;
   let inputQuery = sessionData.query;
   enterSearchQuery(inputQuery);
   setTimeout(clickSubmitButton,5000);});

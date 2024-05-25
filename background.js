@@ -155,7 +155,10 @@ chrome.webNavigation.onCommitted.addListener( async (details) => {
 
     //chromeModule.injectScriptIntoTab(details.tabId,
       //["jquery-3.7.1.min.js", "dom_script.js", "search-results.js"]);
-    await chrome.tabs.sendMessage(details.tabId,"collect search results");  
+      let tab = details.tabId;
+      //debugger;
+      setTimeout(async ()=>{
+    await chrome.tabs.sendMessage(tab,{description:"collect search results"});},5000);  
   }
   else { console.log('NO new script was injected'); }
 });
@@ -182,6 +185,7 @@ chrome.runtime.onMessage.addListener(
      await chrome.tabs.sendMessage(sender.tab.id,message);}
 
      if (message.description == "search results"){
+      //debugger;
       console.log(message.searchResults);
 
      }

@@ -34,15 +34,15 @@ function clickSubmitButton() {
             }
                        
 function extractSearchResults() {
+let searchResults = [];
  $("div.gsc-webResult.gsc-result").each(function ( index ) {
-    //let result = $( this ).text();
-    let searchResults = [];
     let result = {};
     result.text = $( this ).text();
     result.url = $( this ).find("a.gs-title").attr("href");
     searchResults.push(result);
-    return searchResults;
+    //return searchResults;
      //console.log(result);
-                  })}
+                  })
+    return  searchResults;}
 
                   

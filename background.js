@@ -187,11 +187,12 @@ chrome.runtime.onMessage.addListener(
      if (message.description == "search results"){
       //debugger;
       console.log(message.searchResults);
+      /*
       let recordsKey = sender.tab.id;
       let storageData = await chrome.storage.session.get(recordsKey.toString());
       let records = storageData[recordsKey];
       let x = records.find(obj => obj.registryRecordId === message.currentRecord);
-      debugger;
+      debugger;*/
      }
 
 }

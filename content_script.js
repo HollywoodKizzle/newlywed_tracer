@@ -34,9 +34,16 @@ async function main(){
 
   if (message.description == "collect search results"){
     setTimeout( async ()=>{ let results = extractSearchResults();
-                            let storageData = await chrome.storage.session.get("activeRecord");
+
+                           let storageData = await chrome.storage.session.get(message.recordsKey.toString());
+                           let records = storageData[message.recordsKey];
+
+                           storageData = await chrome.storage.session.get("activeRecord");
+                           let currentRecord = records.find(obj => obj.registryRecordId === storageData.activeRecord);
+                           debugger;
+                            //let storageData = await chrome.storage.session.get("activeRecord");
                             //debugger;
-                            let message = {description: "search results", searchResults: results,currentRecord: storageData.activeRecord};
+                            //let message = {description: "search results", searchResults: results,currentRecord: storageData.activeRecord};
                             //debugger;
                             await chrome.runtime.sendMessage(message); }
                             ,4000);

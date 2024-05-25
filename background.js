@@ -185,9 +185,13 @@ chrome.runtime.onMessage.addListener(
      await chrome.tabs.sendMessage(sender.tab.id,message);}
 
      if (message.description == "search results"){
-      debugger;
+      //debugger;
       console.log(message.searchResults);
-
+      let recordsKey = sender.tab.id;
+      let storageData = await chrome.storage.session.get(recordsKey.toString());
+      let records = storageData[recordsKey];
+      let x = records.find(obj => obj.registryRecordId === message.currentRecord);
+      debugger;
      }
 
 }

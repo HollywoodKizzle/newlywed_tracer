@@ -28,12 +28,16 @@ async function main(){
      let storageData = await chrome.storage.session.get(x);
      records = storageData[recordsKey];//
      registryRecord = records[0];
+     let currentRecord = registryRecord.registryRecordId;
+     await chrome.storage.session.set({activeRecord: currentRecord});
      sessionData.query = createQuery(registryRecord);} 
 
   if (message.description == "collect search results"){
     setTimeout( async ()=>{ let results = extractSearchResults();
+                            let storageData = await chrome.storage.session.get("activeRecord");
                             //debugger;
-                            let message = {description: "search results", searchResults: results};
+                            let message = {description: "search results", searchResults: results,currentRecord: storageData.activeRecord};
+                            //debugger;
                             await chrome.runtime.sendMessage(message); }
                             ,4000);
     

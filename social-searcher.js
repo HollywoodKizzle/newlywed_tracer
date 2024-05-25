@@ -17,7 +17,7 @@ function createQuery(registryRecord){
     return query;}
 
     
-    function enterSearchQuery(query){
+function enterSearchQuery(query){
         if (searchBox) {
             const typed = new Typed(queryInputFieldSelector, {
                strings: [query],
@@ -25,7 +25,7 @@ function createQuery(registryRecord){
             }); } }
 
 
-            function clickSubmitButton() {
+function clickSubmitButton() {
                 if (submitButton) {
                     submitButton.click();
                 } else {
@@ -33,3 +33,16 @@ function createQuery(registryRecord){
                 }
             }
                        
+function extractSearchResults() {
+ $("div.gsc-webResult.gsc-result").each(function ( index ) {
+    //let result = $( this ).text();
+    let searchResults = [];
+    let result = {};
+    result.text = $( this ).text();
+    result.url = $( this ).find("a.gs-title").attr("href");
+    searchResults.push(result);
+    return searchResults;
+     //console.log(result);
+                  })}
+
+                  

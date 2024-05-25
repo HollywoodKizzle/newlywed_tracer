@@ -9,8 +9,9 @@ document.getElementById('startButton').addEventListener('click', async function(
     let tabIdenitifier = 3;
     //let instruction = { message: "loadRegistryData", tabId: tabIdenitifier};
     let instruction = "start";
+    let message ={description: "start"};
     //debugger;
-    await chrome.runtime.sendMessage(instruction);
+    await chrome.runtime.sendMessage(message);
     //let storageData = await chrome.storage.session.get("registryRecords");
     //debugger;
     /*if (responseFromBackgroundScript == "data loaded") {  

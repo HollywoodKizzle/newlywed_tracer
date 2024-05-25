@@ -145,7 +145,7 @@ function getAbsoluteUrlWithoutQueryParams(url) {
 
 
 
-chrome.webNavigation.onCommitted.addListener((details) => {
+chrome.webNavigation.onCommitted.addListener( async (details) => {
   
   let url = getAbsoluteUrlWithoutQueryParams(details.url);
   let causeOfNavigation = details.transitionType;
@@ -153,8 +153,9 @@ chrome.webNavigation.onCommitted.addListener((details) => {
   if (url == "https://www.social-searcher.com/facebook-search/" && causeOfNavigation == 'form_submit') {//console.log("freemason");
     //debugger;
 
-    chromeModule.injectScriptIntoTab(details.tabId,
-      ["jquery-3.7.1.min.js", "dom_script.js", "search-results.js"]);
+    //chromeModule.injectScriptIntoTab(details.tabId,
+      //["jquery-3.7.1.min.js", "dom_script.js", "search-results.js"]);
+    await chrome.tabs.sendMessage(details.tabId,"collect search results");  
   }
   else { console.log('NO new script was injected'); }
 });
@@ -166,20 +167,24 @@ chrome.runtime.onInstalled.addListener(async () => {
 });
 
 chrome.runtime.onMessage.addListener(
-  async function (instruction, sender,sendResponse){
+  async function (message, sender,sendResponse){
    //debugger; 
    //let message, tabId; 
    //({ message, tabId} = instruction);
-  if (instruction == "start") { 
+  if (message.description == "start") { 
     //debugger;
     let tab = await chrome.tabs.create({active: true, url: "https://www.social-searcher.com/facebook-search/"});
      await chrome.storage.session.set({ [tab.id]: records  }); 
      
     }
-  if (instruction == "provide record key"){ 
-     await chrome.tabs.sendMessage(sender.tab.id,sender.tab.id);
+  if (message.description == "provide records key"){ 
+     let message = {description: "records key", recordsKey: sender.tab.id};
+     await chrome.tabs.sendMessage(sender.tab.id,message);}
 
-  }
+     if (message.description == "search results"){
+      console.log(message.searchResults);
+
+     }
 
 }
 );

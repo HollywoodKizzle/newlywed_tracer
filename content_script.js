@@ -27,19 +27,21 @@ async function main(){
      console.log(x);
      let storageData = await chrome.storage.session.get(x);
      records = storageData[recordsKey];//
-     registryRecord = records[0];
+     registryRecord = records[1];
      let currentRecord = registryRecord.registryRecordId;
      await chrome.storage.session.set({activeRecord: currentRecord});
      sessionData.query = createQuery(registryRecord);} 
 
-  if (message.description == "collect search results"){
+  if (message.description == "identify leads"){
     setTimeout( async ()=>{ let results = extractSearchResults();
+                            
 
                            let storageData = await chrome.storage.session.get(message.recordsKey.toString());
                            let records = storageData[message.recordsKey];
 
                            storageData = await chrome.storage.session.get("activeRecord");
                            let currentRecord = records.find(obj => obj.registryRecordId === storageData.activeRecord);
+                           let leads = identifyLeads(results,currentRecord);
                            debugger;
                             //let storageData = await chrome.storage.session.get("activeRecord");
                             //debugger;

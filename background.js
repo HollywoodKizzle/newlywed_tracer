@@ -158,7 +158,7 @@ chrome.webNavigation.onCommitted.addListener( async (details) => {
       let tab = details.tabId;
       //debugger;
       setTimeout(async ()=>{
-    await chrome.tabs.sendMessage(tab,{description:"collect search results", recordsKey:tab});},5000);  
+    await chrome.tabs.sendMessage(tab,{description:"identify leads", recordsKey:tab});},5000);  
   }
   else { console.log('NO new script was injected'); }
 });

@@ -75,8 +75,8 @@ function identifyLeads(searchResults,registryRecord){
  let lastName = registryRecord.lastName1;
  let spouse = deriveSpouse(registryRecord);
  let spouseFirstName = registryRecord.lastName2;   
-let leads = [];
-searchResults.forEach((result) => { 
+ let leads = [];
+ searchResults.forEach((result) => { 
   if (result.text.includes(preMaritalName) && result.text.includes("Engaged to" + " " + spouse)){
       leads.push(result);}  
 
@@ -89,4 +89,12 @@ searchResults.forEach((result) => {
     });
     return leads;
 
+}
+
+async function getCurrentRecord(recordsKey){
+  let storageData = await chrome.storage.session.get(recordsKey.toString());
+  let records = storageData[recordsKey];
+  storageData = await chrome.storage.session.get("activeRecord");
+  let currentrecord = records.find(obj => obj.registryRecordId === storageData.activeRecord);
+  return currentrecord;
 }

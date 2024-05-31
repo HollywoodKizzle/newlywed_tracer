@@ -64,17 +64,17 @@ async function main() {
         }
 
     });
-    /*await chrome.runtime.sendMessage({
+    await chrome.runtime.sendMessage({
         description: "awaiting instructions"
-    });*/
+    });
 
 }
 
-//setTimeout(main, 10000);
-waitForVariableChange().then(async ()=>{ debugger;await chrome.runtime.sendMessage({
+setTimeout(main, 10000);
+/*waitForVariableChange().then(async ()=>{ debugger;await chrome.runtime.sendMessage({
   description: "awaiting instructions"
 });
-});
+});*/
 
 startButton.addEventListener("click", async function() {
     //debugger;

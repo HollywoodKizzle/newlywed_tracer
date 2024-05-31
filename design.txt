@@ -47,3 +47,58 @@ When the start button is clicked:
  once the content script recieves this identifier, it will use it to look the records assigned to it 
  The service worker will carry out these steps for each tab it creates
  content scripts will henceforth  interact with their assigned records using their assigned tab identifers
+
+
+
+When the start button in the popup  is clicked:  
+   It will then create a new tab
+
+   It will then WAIT for a predefined interval
+
+   After the interval, it will inject a script into the new tab
+
+   The injected script will set the tabs state variable to "intial_state" and then store this value in localStorage
+
+   The injected script will then notify the service worker of its completion and then exit
+
+   The service worker will then respond by first retrieving a predefined number of  records  
+   
+   These records will be stored  in chrome.storage.session under a key-value pair
+   
+   the key is the new tab's id, and the value is a object with a records property and a currentRecord property that denotes the record that is currently being processed at any given time
+
+   The service will select one record as the currentRecord and then send it to the content script
+
+   Upon recieving  a record from the service worker, the content script consults the tab  state value via localStorage
+
+   If tab state's value is "intial_state", the content script will:
+      create the search query using the names contained in the record
+      enter the  query into the search box
+      update the tab state to "search_results"
+      store the current record in localStorage
+      click the submit button
+
+   The service worker will then respond to the form submission by:
+      waiting for a predefined interval (so the search result can load)
+      then sending a "assess_state" message to the content script
+   
+   Upon recieving the "assess_state" message, the content script will:
+      Check the tab state's value via localStorage
+      If the tab state's value is "search_results"
+       retrieve currentRecord from localStorage
+       identify leads from search results
+       update the tab state to "results_processed"
+       send any collected leads to the service worker
+
+   Upon recieving the collected leads the service worker will:
+    save these leads with their correspopnding record
+    send the aforementioned data to the backend server for further processing
+    remove the processed record from the records array in chrome.storage.session
+    select a new current record
+    send the new current record to the content script   
+   
+
+   The service worker will respond by sending one of a predefined list of instructions to the statically registered content script in the new tab
+   The static content script will consists of nothing but "runtime.onMessage" event listeners that execute different tasks based upon the tabs current state as per the local.storage
+   Each event listener also updates the tab's state after its completion
+

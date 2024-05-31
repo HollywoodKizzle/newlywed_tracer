@@ -282,7 +282,7 @@ chrome.webNavigation.onCommitted.addListener(async (details) => {
 
     let url = getAbsoluteUrlWithoutQueryParams(details.url);
     let causeOfNavigation = details.transitionType;
-    debugger;
+    //debugger;
     //debugger;
     if (url == "https://www.social-searcher.com/facebook-search/" && causeOfNavigation == 'form_submit') { //console.log("freemason");
         //debugger;
@@ -366,6 +366,7 @@ chrome.runtime.onMessage.addListener(
             let storageData = await chrome.storage.session.get(tabId.toString());
             let tabData = storageData[tabId.toString()];
             if (tabData.tabState = "initial state") {
+                debugger;
                 await chrome.tabs.sendMessage(tabId, {
                     description: "perform search query",
                     record: tabData.currentRecord

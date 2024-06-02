@@ -170,14 +170,6 @@ async function getRecordsForTab(tabId){
     return tabData.records;
 }
 
-/*
-async function updateTabData(tabId){
-    let records =  await getRecordsForTab(tabId);
-    let newRecords = records.shift();
-    return newCurrentRecord;
-}
-*/
-
 
 async function startButtonListener(message, sender, sendResponse) {if (message.description == "start") {
              
@@ -191,8 +183,6 @@ async function startButtonListener(message, sender, sendResponse) {if (message.d
 }}
 
 async function initializeTab(message, sender, sendResponse) {if (message.description == "tab_state_initialized") {
-             
-    
     let tabData = {
         records: records,
         currentRecord: records[0]
@@ -224,18 +214,17 @@ async function identifiedLeadsListener(message, sender, sendResponse){
          //save these leads with their correspopnding record
          //send the data to the backend server for processing
          let records = await getRecordsForTab(sender.tab.id);
-         //debugger;
          records.shift();
+    if (records.length !=0){
          let updatedTabData = {records: records,currentRecord:records[0]};
-         //debugger;
          await chrome.storage.session.set({
             [sender.tab.id]: updatedTabData
         });
         await chrome.tabs.sendMessage(sender.tab.id, {
             description: "current_record",
             currentRecord: updatedTabData.currentRecord
-        });
-         //debugger;
+        });}
+    else { console.log("task complete");}
     }
 }
 

@@ -4,7 +4,7 @@
   "version": "1.0",
   "manifest_version": 3,
   "background": {
-    "service_worker": "new_background.js",
+    "service_worker": "background.js",
     "type": "module"
   },
   "permissions": ["storage", "activeTab", "scripting", "tabs", "webNavigation"
@@ -18,7 +18,7 @@
   "content_scripts": [
     {
       "matches": ["https://www.social-searcher.com/*"],
-      "js": ["jquery-3.7.1.min.js","/node_modules/typed.js/dist/typed.umd.js","social-searcher.js","new_content_script.js"]
+      "js": ["jquery-3.7.1.min.js","/node_modules/typed.js/dist/typed.umd.js","social-searcher.js","content_script.js"]
     }
   ]
   

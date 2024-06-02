@@ -155,23 +155,38 @@ function waitInterval(interval){
 }
 
 
-chrome.runtime.onMessage.addListener(
-    async function(message, sender, sendResponse) {
-        if (message.description == "start") {
+async function startButtonListener(message, sender, sendResponse) {if (message.description == "start") {
              
-            let tab = await chrome.tabs.create({
-                active: true,
-                url: "https://www.social-searcher.com/facebook-search/"
-            });
-            let tabData = {
-                records: records,
-                currentRecord: records[0]
-            };
-            await waitInterval(4000);
-            chromeModule.injectScriptIntoTab(tab.id, ["tabstate.js"]);
-        }
-    }
-);
+    let tab = await chrome.tabs.create({
+        active: true,
+        url: "https://www.social-searcher.com/facebook-search/"
+    });
+    let tabData = {
+        records: records,
+        currentRecord: records[0]
+    };
+    await waitInterval(4000);
+    chromeModule.injectScriptIntoTab(tab.id, ["tabstate.js"]);
+}}
+
+async function initializeTab(message, sender, sendResponse) {if (message.description == "tab_state_initialized") {
+    //await waitInterval(4000);         
+    
+    let tabData = {
+        records: records,
+        currentRecord: records[0]
+    };
+    await chrome.storage.session.set({
+        [sender.tabId]: tabData
+    });
+    await chrome.tabs.sendMessage(sender.tab.id, {
+        description: "current_record",
+        currentRecord: tabData.currentRecord
+    });
+}}
 
 
 
+
+chrome.runtime.onMessage.addListener(startButtonListener);
+chrome.runtime.onMessage.addListener(initializeTab);

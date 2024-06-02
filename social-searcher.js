@@ -1,6 +1,7 @@
 const queryInputFieldSelector = '#facebooksearchinput'; 
 const submitButton = document.querySelector('.facebook-page-form__btn');
 
+const searchBox = document.getElementById("facebooksearchinput");
 
 function derivePreMaritalName(registryRecord){
     let preMaritalName = registryRecord.firstName1 + " " + registryRecord.lastName1;

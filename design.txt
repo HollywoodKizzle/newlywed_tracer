@@ -67,7 +67,7 @@ When the start button in the popup  is clicked:
    
    the key is the new tab's id, and the value is a object with a records property and a currentRecord property that denotes the record that is currently being processed at any given time
 
-   The service will select one record as the currentRecord and then send it to the content script
+   The service worker will then select one record as the currentRecord and then send it to the content script along with a "current_record" message 
 
    Upon recieving  a record from the service worker, the content script consults the tab  state value via localStorage
 
@@ -95,10 +95,17 @@ When the start button in the popup  is clicked:
     send the aforementioned data to the backend server for further processing
     remove the processed record from the records array in chrome.storage.session
     select a new current record
-    send the new current record to the content script   
+    send the new current record to the content script
+    along with a "new_record" message   
    
+   Upon recieving the new record from the service worker, the content script will:
+     consult the tab's state value via localStorage
+     if the tab state is "results_processed"
+       clear the text present in the search box
+       update the current record value in localStorage
+       construct the appropiate search query using the new record
+       enter the query into the search box
+       update the tab state's value to "search_results"
+       click the submit button 
 
-   The service worker will respond by sending one of a predefined list of instructions to the statically registered content script in the new tab
-   The static content script will consists of nothing but "runtime.onMessage" event listeners that execute different tasks based upon the tabs current state as per the local.storage
-   Each event listener also updates the tab's state after its completion
-
+   

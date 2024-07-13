@@ -170,6 +170,24 @@ async function getRecordsForTab(tabId){
     return tabData.records;
 }
 
+async function fetchData() {
+    try {
+        const response = await fetch('http://localhost:3000/data');
+        if (!response.ok) {
+            throw new Error('Network response was not ok');
+        }
+        const data = await response.json();
+        //debugger;
+        return data;
+        //console.log('Data received:', data);
+        // Process the data as needed
+    } catch (error) {
+        console.error('Error fetching data:', error);
+    }
+}
+
+
+
 
 async function startButtonListener(message, sender, sendResponse) {if (message.description == "start") {
              
@@ -183,6 +201,8 @@ async function startButtonListener(message, sender, sendResponse) {if (message.d
 }}
 
 async function initializeTab(message, sender, sendResponse) {if (message.description == "tab_state_initialized") {
+    const data = await fetchData();
+    debugger;
     let tabData = {
         records: records,
         currentRecord: records[0]

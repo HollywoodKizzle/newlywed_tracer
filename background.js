@@ -187,7 +187,19 @@ async function fetchData() {
 }
 
 
-
+async function postData(url = '', data = {}) {
+  // Default options are marked with *
+  const response = await fetch(url, {
+    method: 'POST', // *GET, POST, PUT, DELETE, etc.
+    headers: {
+      'Content-Type': 'application/json'
+      // 'Content-Type': 'application/x-www-form-urlencoded',
+    },
+    body: JSON.stringify(data) // body data type must match "Content-Type" header
+  });
+  
+  return response.json(); // parses JSON response into native JavaScript objects
+}
 
 async function startButtonListener(message, sender, sendResponse) {if (message.description == "start") {
              
@@ -240,10 +252,11 @@ async function identifiedLeadsListener(message, sender, sendResponse){
     if (message.description == "next_record"){
         let identifiedLeads,attemptedQueries,registryRecordId;
         ({ identifiedLeads, attemptedQueries, registryRecordId } = message);
-        
+        //debugger;
         if (identifiedLeads.length > 0){ console.log('leads identified');}
         else {console.log('No leads identified')}
-            
+        let response = await postData('http://localhost:3000/postData', message);
+        //debugger;
          //save these leads with their correspopnding record
          //send the data to the backend server for processing
          let records = await getRecordsForTab(sender.tab.id);
@@ -253,9 +266,16 @@ async function identifiedLeadsListener(message, sender, sendResponse){
          await chrome.storage.session.set({
             [sender.tab.id]: updatedTabData
         });
+
+        let firstName1, lastName1, firstName2, lastName2;
+        ({ firstName1, lastName1, firstName2, lastName2 } = updatedTabData.currentRecord);
+        let queryTemplates = [`'${firstName1} ${lastName1}' AND 'Engaged to ${firstName2} ${lastName2}'`,
+                              `'${firstName1} ${lastName1} is with ${firstName2} ${lastName2}'`];
+        
         await chrome.tabs.sendMessage(sender.tab.id, {
-            description: "current_record",
-            currentRecord: updatedTabData.currentRecord
+            description: "new_record",
+            currentRecord: updatedTabData.currentRecord,
+            queryTemplates: queryTemplates
         });}
     else { console.log("task complete");}
     }

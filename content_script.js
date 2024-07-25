@@ -59,18 +59,18 @@ function waitForVariableChange() {
                         console.log('leads identified!')}
                   else {
                       console.log('No leads identified')}    
-                  debugger;
+                  //debugger;
                   if (queryIndex > -1){
                       let inputQuery = queryTemplates[queryIndex];
                       queryIndex = queryIndex - 1;
                       sessionStorage.setItem('queryIndex',queryIndex);
-                      debugger;
+                      //debugger;
                       enterSearchQuery(inputQuery);
                       setTimeout(clickSubmitButton, 6000);}
                   else {
                       storedLeads = sessionStorage.getItem('identifiedLeads');
                       storedLeads = JSON.parse(storedLeads);
-                      debugger;
+                      //debugger;
                       await chrome.runtime.sendMessage({
                       description: "next_record",
                       identifiedLeads: storedLeads,
@@ -87,7 +87,8 @@ function waitForVariableChange() {
               let currentRecord = JSON.stringify(message.currentRecord);
               let queryTemplates = JSON.stringify(message.queryTemplates);
             sessionStorage.setItem("currentRecord", currentRecord);
-              sessionStorage.setItem("queryTemplates", queryTemplates);
+            sessionStorage.setItem("queryTemplates", queryTemplates);
+            sessionStorage.setItem("identifiedLeads",'[]');
               document.querySelector('#facebooksearchinput').value = "";
               let queryIndex = message.queryTemplates.length - 1;
               sessionStorage.setItem("queryIndex",queryIndex);

@@ -205,22 +205,14 @@ async function initializeTab(message, sender, sendResponse) {if (message.descrip
     let data = results.filter(obj => obj.firstName1 !== "" && obj.firstName2 !== "" && obj.lastName1 !== "" && obj.lastName2 !== "");
     let tabData = {
         records: data,
-        currentRecord: records[0],
-        identifiedLeads: []
+        currentRecord: records[0]
     };
-    let firstName1, lastName1, firstName2, lastName2;
-    ({ firstName1, lastName1, firstName2, lastName2 } = tabData.currentRecord);
-    // `'${firstName1} ${lastName1}' AND 'Engaged to ${firstName2} ${lastName2}'`
-    // `${firstName1} ${lastName2} is with ${firstName2} ${lastName2}`
-    let queryTemplates = [`'${firstName1} ${lastName1}' AND 'Engaged to ${firstName2} ${lastName2}'`,
-                          `${firstName1} ${lastName1} is with ${firstName2} ${lastName2}`];
     await chrome.storage.session.set({
         [sender.tab.id]: tabData
     });
     await chrome.tabs.sendMessage(sender.tab.id, {
-        description: "new_record",
-        currentRecord: tabData.currentRecord,
-        queryTemplates: queryTemplates
+        description: "current_record",
+        currentRecord: tabData.currentRecord
     });
 }}
 
@@ -230,20 +222,15 @@ async function formSubmissionListener(details){
     if (url == "https://www.social-searcher.com/facebook-search/" && causeOfNavigation == 'form_submit') {
         await waitInterval(6000);
         await chrome.tabs.sendMessage(details.tabId, {
-            description: "scrape_data"
+            description: "assess_state"
         });
     }
 
 }
 
 async function identifiedLeadsListener(message, sender, sendResponse){
-    if (message.description == "next_record"){
-        let identifiedLeads,attemptedQueries,registryRecordId;
-        ({ identifiedLeads, attemptedQueries, registryRecordId } = message);
-        
-        if (identifiedLeads.length > 0){ console.log('leads identified');}
-        else {console.log('No leads identified')}
-            
+    if (message.description == "leads_identified"){
+        console.log(message);
          //save these leads with their correspopnding record
          //send the data to the backend server for processing
          let records = await getRecordsForTab(sender.tab.id);

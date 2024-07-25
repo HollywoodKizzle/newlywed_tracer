@@ -31,7 +31,7 @@ function createQuery(registryRecord){
     return query;}*/
    
 
-    function createQuery(registryRecord){
+    function createQuery1(registryRecord){
         let preMaritalName = derivePreMaritalName(registryRecord);
         let spouseFullName = deriveSpouse(registryRecord);
         let postMaritalName = derivePostMaritalName(registryRecord)
@@ -41,6 +41,15 @@ function createQuery(registryRecord){
         query += " " + spouseFullName + "'";
         return query;}
     
+    function createQuery2(registryRecord){
+        let preMaritalName = derivePreMaritalName(registryRecord);
+        let spouseFullName = deriveSpouse(registryRecord);
+        let postMaritalName = derivePostMaritalName(registryRecord)
+        let query = "'" + preMaritalName 
+        query += " is with "; 
+        query += spouseFullName + "'";
+        return query;}
+
 
 function enterSearchQuery(query){
         if (searchBox) {
@@ -63,71 +72,44 @@ let searchResults = [];
  $("div.gsc-webResult.gsc-result").each(function ( index ) {
     let result = {};
     result.text = $( this ).text();
-    result.url = $( this ).find("a.gs-title").attr("href");
+    result.facebookContact = $( this ).find("a.gs-title").attr("href");
     searchResults.push(result);
     //return searchResults;
      //console.log(result);
                   })
     return  searchResults;}
-/*
+
 function identifyLeads(searchResults,registryRecord){
  let preMaritalName = derivePreMaritalName(registryRecord);
  let postMaritalName = derivePostMaritalName(registryRecord);
  let lastName = registryRecord.lastName1;
  let spouse = deriveSpouse(registryRecord);
- let spouseFirstName = registryRecord.lastName2;   
+ let spouseFirstName = registryRecord.firstName2;
+ let spouseLastName = registryRecord.lastName2;
  let leads = [];
- searchResults.forEach((result) => { 
+ searchResults.forEach((result) => {
+     //'Whitney Houston' 'Engaged to Bobby Brown'
   if (result.text.includes(preMaritalName) && result.text.includes("Engaged to" + " " + spouse)){
       leads.push(result);}  
-
+     //'Whitney Brown' 'Engaged to Bobby Brown'
   if (result.text.includes(postMaritalName) && result.text.includes("Engaged to" + " " + spouse)){
-        leads.push(result);} 
-        
+        leads.push(result);}
+     
+    //'Bobby Houston' 'Engaged to Whitney Houston'
   if (result.text.includes(spouseFirstName + " " + lastName) && result.text.includes("Engaged to" + " " + preMaritalName)){ leads.push(result);}
+
+   //'Bobby Brown' 'Engaged to Whitney Houston'
+  if (result.text.includes(spouseFirstName + " " + spouseLastName) && result.text.includes("Engaged to" + " " + preMaritalName)){ leads.push(result);}
+
+     //'Bobby Brown' 'Engaged to Whitney Brown'
+  if (result.text.includes(spouseFirstName + " " + spouseLastName) && result.text.includes("Engaged to" + " " + postMaritalName)){ leads.push(result);}
     
     
     });
     return leads;
 
 }
-*/
-function identifyLeads(searchResults,registryRecord){
-    let preMaritalName = derivePreMaritalName(registryRecord);
-    let postMaritalName = derivePostMaritalName(registryRecord);
-    let lastName = registryRecord.lastName1;
-    let spouse = deriveSpouse(registryRecord);
-    let spouseFirstName = registryRecord.firstName2;
-    let spouseLastName = registryRecord.lastName2;
-    let leads = [];
-    searchResults.forEach((result) => {
-        //'Whitney Houston' 'Engaged to Bobby Brown'
-     if (result.text.includes(preMaritalName) && result.text.includes("Engaged to" + " " + spouse)){
-         leads.push(result);}  
-        //'Whitney Brown' 'Engaged to Bobby Brown'
-     if (result.text.includes(postMaritalName) && result.text.includes("Engaged to" + " " + spouse)){
-           leads.push(result);}
-        
-       //'Bobby Houston' 'Engaged to Whitney Houston'
-     if (result.text.includes(spouseFirstName + " " + lastName) && result.text.includes("Engaged to" + " " + preMaritalName)){ leads.push(result);}
-   
-      //'Bobby Brown' 'Engaged to Whitney Houston'
-     if (result.text.includes(spouseFirstName + " " + spouseLastName) && result.text.includes("Engaged to" + " " + preMaritalName)){ leads.push(result);}
-   
-        //'Bobby Brown' 'Engaged to Whitney Brown'
-     if (result.text.includes(spouseFirstName + " " + spouseLastName) && result.text.includes("Engaged to" + " " + postMaritalName)){ leads.push(result);}
 
-        //'Whitney Houston is with Bobby Brown'
-       if (result.text.includes(preMaritalName + " " + "is with " + spouseFirstName + " " + spouseLastName)){ leads.push(result);}
-
-        //'Bobby Brown is with Whitney Houston'
-        if (result.text.includes(spouseFirstName + " " + spouseLastName + " " + preMaritalName + " " + "is with ")){ leads.push(result);}
-       
-       });
-       return leads;
-   
-   }
-   
 async function getCurrentRecord(recordsKey){
   let storageData = await chrome.storage.session.get(recordsKey.toString());
   let records = storageData[recordsKey];

@@ -109,3 +109,75 @@ When the start button in the popup  is clicked:
        click the submit button 
 
    
+
+
+MODIFICATION:
+when the background injects tabstate js:
+ the script will  set 2 items in the browser's session storage:
+ the tab state key which will function as it did above;
+
+ a query templates key whose value is an array of template literals from which search queries will be generated dynamically 
+
+ a query index key that is initailly set to 1 less than the length of the query templates array
+
+ when the content script recieves a perform_query message, it will:
+  get the value of the query index
+
+  if the value is less than zero
+     reset the query index
+     send a "record_request" message to service worker
+  else 
+     select the element whose index matches the query index's value from the queryTemplates array
+
+     subtract 1 from the current query index
+
+     create the query using the selected template and the current record
+  
+     enter the query and submit it 
+
+
+when the content script recieves a 'scrape_data' message, it will:
+   analyze the searxh results for leads
+   if any leads are idenitifed
+      store them in the identifiedLeads key of sessionStorage
+   else
+      log the lack of leads to the console
+   if the queryIndex is greater than -1
+      retrieve the next query from the queryTemplates key of sesisonStorage
+      decrement the queryIndex key of sessionStorage
+      enter the next query in the search box and click submit
+   else
+       send the following data to the service worker:
+        the data within the identifiedLeads key of sessionStorage
+        the registryRecordId of the currentRecord key of sessionStorage
+        the queryTemplates key of the session storage
+        a 'next_record' message
+   
+
+The service worker responds to  form submissions by:
+      waiting for a predefined interval (so the search result can load)
+      then send a "scrape_data" message to the content script
+
+The service worker responds to 'next_record' messages by:
+      checking the idenitified_leads message array for data
+      if data is found
+        log this fact to the console
+      else
+        log the absence of data to the console
+      send the following the backend database:
+        the identifiedLeads data
+        the registryRecordId sent by the content script
+        the queryTemplates data sent by the content script
+      remove the current record from the records stored in chrome.session.storage
+      select the next record and send a new_record message to content script
+      
+        
+
+Upon recieving the "assess_state" message, the content script will:
+      Check the tab state's value via localStorage
+      If the tab state's value is "search_results"
+      identify leads from search results
+      store any identified leads data in the identifiedLeads key
+       retrieve currentRecord from localStorage
+       perform the query index routine as outlined above
+       send any collected leads to the service worker

@@ -51,7 +51,7 @@ function waitForVariableChange() {
                   let queryIndex = sessionStorage.getItem('queryIndex');
                   queryTemplates = JSON.parse(queryTemplates);
                   storedLeads = JSON.parse(storedLeads);
-                  debugger;
+                 // debugger;
                   if (leads.length > 0){
                         storedLeads.push(...leads);
                         storedLeads = JSON.stringify(storedLeads);

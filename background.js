@@ -217,15 +217,16 @@ async function initializeTab(message, sender, sendResponse) {if (message.descrip
     let data = results.filter(obj => obj.firstName1 !== "" && obj.firstName2 !== "" && obj.lastName1 !== "" && obj.lastName2 !== "");
     let tabData = {
         records: data,
-        currentRecord: records[0],
+        currentRecord: data[0],
         identifiedLeads: []
     };
     let firstName1, lastName1, firstName2, lastName2;
     ({ firstName1, lastName1, firstName2, lastName2 } = tabData.currentRecord);
     // `'${firstName1} ${lastName1}' AND 'Engaged to ${firstName2} ${lastName2}'`
     // `${firstName1} ${lastName2} is with ${firstName2} ${lastName2}`
-    let queryTemplates = [`'${firstName1} ${lastName1}' AND 'Engaged to ${firstName2} ${lastName2}'`,
-                          `${firstName1} ${lastName1} is with ${firstName2} ${lastName2}`];
+    //let queryTemplates = [`'${firstName1} ${lastName1}' AND 'Engaged to ${firstName2} ${lastName2}'`/*,
+      //                    `${firstName1} ${lastName1} is with ${firstName2} ${lastName2}`*/];
+                          let queryTemplates = [`'${firstName1} ${lastName1}' AND 'Engaged to ${firstName2} ${lastName2}'`];
     await chrome.storage.session.set({
         [sender.tab.id]: tabData
     });
@@ -269,8 +270,9 @@ async function identifiedLeadsListener(message, sender, sendResponse){
 
         let firstName1, lastName1, firstName2, lastName2;
         ({ firstName1, lastName1, firstName2, lastName2 } = updatedTabData.currentRecord);
-        let queryTemplates = [`'${firstName1} ${lastName1}' AND 'Engaged to ${firstName2} ${lastName2}'`,
-                              `'${firstName1} ${lastName1} is with ${firstName2} ${lastName2}'`];
+        //let queryTemplates = [`'${firstName1} ${lastName1}' AND 'Engaged to ${firstName2} ${lastName2}'`,
+                              //`'${firstName1} ${lastName1} is with ${firstName2} ${lastName2}'`];
+        let queryTemplates = [`'${firstName1} ${lastName1}' AND 'Engaged to ${firstName2} ${lastName2}'`];
         
         await chrome.tabs.sendMessage(sender.tab.id, {
             description: "new_record",
@@ -281,6 +283,11 @@ async function identifiedLeadsListener(message, sender, sendResponse){
     }
 }
 
+function logHelloWorld() {
+    console.log("Hello, World!");
+}
+
+setInterval(logHelloWorld, 2000);
 
 
 
